@@ -19,8 +19,8 @@ memory = Memory(location=".joblib_cache", verbose=0)
 
 def readMesh(fn, normalise=False):
     mesh = vp.load(fn)
-    v = mesh.points().copy().astype(np.double)
-    f = np.asarray(mesh.faces())
+    v = mesh.vertices.copy().astype(np.double)
+    f = np.asarray(mesh.cells)
     if normalise:
         v -= np.mean(v, axis=0)
         v /= math.sqrt(area(v, f))
@@ -157,7 +157,7 @@ def vedo_decimate(v, f, N=None, frac=None):
         raise ValueError
 
     vedo_mesh.decimate(**args)
-    u, f = vedo_mesh.points(), np.asarray(vedo_mesh.faces())
+    u, f = vedo_mesh.vertices, np.asarray(vedo_mesh.cells)
     d = differenceMatrix(v, u)
     idx = d.argmin(axis=-1)
     return True, u, f, None, idx
@@ -168,7 +168,7 @@ def vedo_subdivide(v, f, N=1, method=0):
 
     vedo_mesh = vp.Mesh([v, f])
     vedo_mesh.subdivide(N=N, method=method)
-    u, f = vedo_mesh.points(), np.asarray(vedo_mesh.faces())
+    u, f = vedo_mesh.vertices, np.asarray(vedo_mesh.cells)
     d = differenceMatrix(v, u)
     idx = d.argmin(axis=-1)
     return u, f, idx
@@ -243,6 +243,9 @@ def geodesicMatrix(v, f, i1=np.array([]), i2=np.array([])):
 
     if i2.size == 0:
         i2 = i1
+
+    i1 = i1.astype(np.int64)
+    i2 = i2.astype(np.int64)
 
     func = lambda i: igl.exact_geodesic(v, f, np.array([i]), i2)
     d = Parallel(n_jobs=-1)(delayed(func)(j) for j in i1)
@@ -324,7 +327,7 @@ def extrapolate_scalars(
 
 
 def sign(x):
-    return 1 - 2 * np.asarray(x < 0).astype(np.int)
+    return 1 - 2 * np.asarray(x < 0).astype(np.int64)
 
 
 def safe_divide(x, y, eps=1e-9):

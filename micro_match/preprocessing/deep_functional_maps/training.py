@@ -112,7 +112,7 @@ class ensembleTrainer:
                 print("Epoch {}, Loss: {}".format(epoch + 1, 100 * epoch_loss))
             with self.summary_writer.as_default():
                 tf.summary.scalar("loss", epoch_loss, step=epoch)
-            self.loss.reset_states()
+            self.loss.reset_state()
 
             if epoch == 1:
                 best = epoch_loss

@@ -40,7 +40,7 @@ def degenerate_assignment(C: np.array, feasible: np.array) -> np.array:
     # )
     # print(info)
     status = solver.Solve()
-    X = np.zeros((n1, n2), dtype=np.int)
+    X = np.zeros((n1, n2), dtype=int)
 
     if status == pywraplp.Solver.OPTIMAL or status == pywraplp.Solver.FEASIBLE:
         for i, j in zip(rows, cols):

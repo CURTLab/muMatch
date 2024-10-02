@@ -358,7 +358,7 @@ class Mesh:
                 msh.cmap("jet", self.scalars[s])
             else:
                 raise ValueError("Argument not recognised.")
-            msh.addScalarBar()
+            msh.add_scalarbar()
 
         if "alpha" in kwargs:
             msh.alpha(kwargs["alpha"])
@@ -386,8 +386,8 @@ class Mesh:
         return vp.Mesh([self.v, self.f], c=c)
 
     def from_vedo(self, vedo_mesh):
-        self.__v = vedo_mesh.points().copy()
-        self.__f = np.asarray(vedo_mesh.faces())
+        self.__v = vedo_mesh.vertices.copy()
+        self.__f = np.asarray(vedo_mesh.cells)
         return self
 
     def write(self, fn, method="vedo"):

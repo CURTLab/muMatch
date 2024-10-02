@@ -81,7 +81,7 @@ def spectral_functional(src, dst, k):
 
 def superOperatorPromotion(A, n):
     r, c = A.shape
-    B = lil_matrix((r * n, c * n), dtype=np.float)
+    B = lil_matrix((r * n, c * n), dtype=float)
     for i in range(r * n):
         for k in range(c):
             j = k * n + i % n

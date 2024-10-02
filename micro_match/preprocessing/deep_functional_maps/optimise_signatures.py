@@ -30,10 +30,10 @@ def process_directory(data_dir, checkpoint_dir, config, mesh_type):
     trainer = ensembleTrainer(
         tf_record_file=fin, num_sigs=num_signatures, lr=lr, bs=bs
     )
-    trainer.train(number_epochs, checkpoint_dir, mesh_type)
+    trainer.train(number_epochs, checkpoint_dir, mesh_type + ".weights.h5")
 
     # Optimise signature functions
-    predictor = dfmPredictor(mesh_type, num_signatures)
+    predictor = dfmPredictor(checkpoint_dir, mesh_type + ".weights.h5", num_signatures)
     dir_sigs = os.path.join(data_dir, "signatures")
     files = os.listdir(dir_sigs)
     for fn in files:

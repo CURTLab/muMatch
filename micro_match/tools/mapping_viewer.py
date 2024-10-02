@@ -97,8 +97,8 @@ def renderCorrespondence_vtk(actor1, actor2, idx, rad=0.03):
     actor1 = actor1.clone().normalize()
     actor2 = actor2.clone().normalize()
 
-    points1 = actor1.points()
-    points2 = actor2.points()
+    points1 = actor1.vertices
+    points2 = actor2.vertices
     # print(points1.shape, points2.shape, points2[idx].shape)
 
     sphereActor_1, sphere_1 = sphereActor(rad)

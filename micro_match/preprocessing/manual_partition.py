@@ -9,7 +9,7 @@ def loader(dir, fn):
     fgeo = os.path.join(dir, "geodesic_matrices", fn + ".npy")
     vedo_mesh = vp.load(fmsh)
     vedo_mesh.normalize()
-    centre = vedo_mesh.points().copy().mean(axis=0)
+    centre = vedo_mesh.vertices.copy().mean(axis=0)
     vedo_mesh.shift(*centre)
     dg = np.load(fgeo)
     return vedo_mesh, dg

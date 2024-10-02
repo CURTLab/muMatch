@@ -26,7 +26,7 @@ def _int64_feature(value):
 
 
 def pruneIndices(number, target):
-    return np.linspace(0, number, target, endpoint=False).astype(np.int)
+    return np.linspace(0, number, target, endpoint=False).astype(int)
 
 
 def stripFileType(s):

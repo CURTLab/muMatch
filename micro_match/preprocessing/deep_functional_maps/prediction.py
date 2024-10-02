@@ -10,12 +10,9 @@ from . import operations as ops
 
 
 class dfmPredictor:
-    def __init__(self, chkpt_name, num_signatures):
+    def __init__(self, checkpoint_dir, chkpt_name, num_signatures):
         self.func = ops.residualNet(7, num_signatures, training=False)
-        cur_dir = os.path.dirname(
-            __file__
-        )  # TODO: Data needs to be stored outside of python package.
-        weight_path = os.path.join(cur_dir, "checkpoints", chkpt_name)
+        weight_path = os.path.join(checkpoint_dir, chkpt_name)
         self.func.load_weights(weight_path)
 
     def __call__(self, raw_signatures):

@@ -54,7 +54,7 @@ def mesh_correspondence(
     prev_files = list({corr[0] for corr in mesh_pairs})
     curr_files = list({corr[1] for corr in mesh_pairs})
     geodesic_distortions = pd.DataFrame(
-        0, index=prev_files, columns=curr_files
+        0, index=prev_files, columns=curr_files, dtype=float
     )
     for correspondence in mesh_pairs:
         mesh_a, mesh_b = correspondence
